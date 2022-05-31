@@ -13,5 +13,6 @@ namespace Assets.Model
     public interface IHaveUpwardCompatibility
     {
         FittingLevel[] UpwardFittingLevels { get; set; }
+
     }
 }

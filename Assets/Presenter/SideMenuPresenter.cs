@@ -9,7 +9,10 @@ using UnityEngine;
 
 namespace Assets.Presenter
 {
-
+    /// <summary>
+    /// Provides a translations of objects and logic between Views and Models.
+    /// Sort of a buffer zone class to avoid models influencing the view and vice-versus.
+    /// </summary>
     public class SideMenuPresenter
     {
         private SideMenu sideMenu;
@@ -28,31 +31,31 @@ namespace Assets.Presenter
         {
             List<GameObject> compatibleFittings = new List<GameObject>();
 
-            foreach (GameObject fitting in AllSidemenuOptions)
+            foreach (GameObject fittingOption in AllSidemenuOptions)
             {
-                if (fitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.OAFitting)
+                if (fittingOption.GetComponent<FittingType>().TypeOfFitting == FittingTypes.OAFitting)
                 {
                     var fittingModel = new OAFitting();
-                    if (fittingModel.DownwardFittingLevel.Intersect(FittingStatePresenter.CurrentFittingLevels).ToList().Count > 0)
+                    if (fittingModel.DownwardFittingLevel.Intersect(FittingState.Instance.CurrentFittingLevels).ToList().Count > 0)
                     {
-                        compatibleFittings.Add(fitting);
+                        compatibleFittings.Add(fittingOption);
                     }
                 }
-                else if (fitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Extender)
+                else if (fittingOption.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Extender)
                 {
 
                     var fittingModel = new ExtenderFitting();
-                    if (fittingModel.DownwardFittingLevel.Intersect(FittingStatePresenter.CurrentFittingLevels).ToList().Count > 0)
+                    if (fittingModel.DownwardFittingLevel.Intersect(FittingState.Instance.CurrentFittingLevels).ToList().Count > 0)
                     {
-                        compatibleFittings.Add(fitting);
+                        compatibleFittings.Add(fittingOption);
                     }
                 }
-                else if (fitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Camera)
+                else if (fittingOption.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Camera)
                 {
                     var fittingModel = new CameraFitting();
-                    if (fittingModel.DownwardFittingLevel.Intersect(FittingStatePresenter.CurrentFittingLevels).ToList().Count > 0)
+                    if (fittingModel.DownwardFittingLevel.Intersect(FittingState.Instance.CurrentFittingLevels).ToList().Count > 0)
                     {
-                        compatibleFittings.Add(fitting);
+                        compatibleFittings.Add(fittingOption);
                     }
                 }
             }
@@ -63,23 +66,20 @@ namespace Assets.Presenter
         {
             if (selectedFitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.OAFitting)
             {
-                var fittingModel = new OAFitting();
-                FittingStatePresenter.SetFittingState(fittingModel.UpwardFittingLevels);
-
-
+                var fittingModel = new OAFitting(selectedFitting.transform.position, selectedFitting.transform.rotation);
+                FittingState.Instance.SetFittingState(fittingModel.UpwardFittingLevels);
+                //selectedFitting.transform.position = fittingModel.FittingPosition;
             }
             else if (selectedFitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Extender)
             {
-                var fittingModel = new ExtenderFitting();
-                FittingStatePresenter.SetFittingState(fittingModel.UpwardFittingLevels);
-
+                var fittingModel = new ExtenderFitting(selectedFitting.transform.position, selectedFitting.transform.rotation);
+                FittingState.Instance.SetFittingState(fittingModel.UpwardFittingLevels);
             }
             else if (selectedFitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Camera)
             {
                 var fittingModel = new CameraFitting();
-                FittingStatePresenter.SetFittingState(null);
+                FittingState.Instance.SetFittingState(null);
             }
-            Debug.Log(FittingStatePresenter.CurrentFittingLevels);
         }
     }
 }

@@ -7,36 +7,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Presenter
 {
-    public static class FittingStatePresenter
-    {
-        private static  FittingState fittingStateInstance;
-
-        /// <summary>
-        /// Defaults to empty array
-        /// </summary>
-        public static FittingLevel[] CurrentFittingLevels { get; private set; } = new FittingLevel[0];
-
-
-        public static void InitializeFittingState(FittingState fittingState)
-        {
-            fittingStateInstance = fittingState;
-            CurrentFittingLevels = new FittingLevel[] { FittingLevel.L1 };
-        }
-
-        public static void SetFittingState(FittingLevel[] fittingLevels)
-        {
-            if (fittingLevels != null)
-                CurrentFittingLevels = fittingStateInstance.FittingLevels = fittingLevels;
-            else
-                CurrentFittingLevels = fittingStateInstance.FittingLevels = new FittingLevel[0];
-        }
-
-        public static void CheckFittingState(FittingLevel nextFittingLevel)
-        {
-           
-        }
-
-    }
+    /**
+     *  This file provides fitting descriptions that would 
+     *  probably be fetched from some sort of a database.
+     *  This makes this a Model file, but for the sake of
+     *  example Presenter namespace would make these definitions
+     *  available to both the views and the models.
+     */
 
     /// <summary>
     /// All different types of fittings

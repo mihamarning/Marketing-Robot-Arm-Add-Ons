@@ -8,40 +8,49 @@ using UnityEngine;
 
 namespace Assets.View
 {
+    /// <summary>
+    /// The left side of the canvas is populated with a scroll view menu of items.
+    /// </summary>
     public class SideMenu : MonoBehaviour
     {
         [SerializeField]
-        private GameObject SideMenuContent; 
-
-        private List<GameObject> AllSidemenuOptions = new List<GameObject>();
-        private  List<GameObject> SideMenuOptions { get;  set; }
-
+        private GameObject sideMenuContent; 
+        private List<GameObject> allSidemenuOptions = new List<GameObject>();
+        private  List<GameObject> sideMenuOptions { get;  set; }
         private SideMenuPresenter sideMenuPresenter;
 
         void Start()
         {
+            Debug.Log(new FittingModel().FittingPosition);
             sideMenuPresenter = new SideMenuPresenter(this);
 
-            if (SideMenuContent != null)
+            if (sideMenuContent != null)
             {
-                foreach (Transform child in SideMenuContent.transform)
-                    AllSidemenuOptions.Add(child.gameObject);
+                foreach (Transform child in sideMenuContent.transform)
+                    allSidemenuOptions.Add(child.gameObject);
                 ShowOnlyViableOptions();
             }
         }
 
+        /// <summary>
+        /// Not all items can be fitted to the robot arm or previously fitted item. 
+        /// This method activates only the ones that can be fitted to the current available fitting levels.
+        /// </summary>
         private void ShowOnlyViableOptions()
         {
-            SideMenuOptions = sideMenuPresenter.GetSidemenuItems(AllSidemenuOptions);
-            AllSidemenuOptions.ForEach(option => option.SetActive(false));
-            AllSidemenuOptions.Intersect(SideMenuOptions).ToList().ForEach(option => option.SetActive(true));
+            sideMenuOptions = sideMenuPresenter.GetSidemenuItems(allSidemenuOptions);
+            allSidemenuOptions.ForEach(option => option.SetActive(false));
+            allSidemenuOptions.Intersect(sideMenuOptions).ToList().ForEach(option => option.SetActive(true));
         }
 
+        /// <summary>
+        /// Application user clicks on a fitting option.
+        /// </summary>
+        /// <param name="selectedOption">One of the items in a scroll view.</param>
         public void SelectAFitting(GameObject selectedOption)
         {
             sideMenuPresenter.SelectAFitting(selectedOption);
             ShowOnlyViableOptions();
         }
-
     }
 }
