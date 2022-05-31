@@ -66,19 +66,20 @@ namespace Assets.Presenter
         {
             if (selectedFitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.OAFitting)
             {
-                var fittingModel = new OAFitting(selectedFitting.transform.position, selectedFitting.transform.rotation);
-                FittingState.Instance.SetFittingState(fittingModel.UpwardFittingLevels);
-                //selectedFitting.transform.position = fittingModel.FittingPosition;
+                Transform fittingUpwardsCompatibilityPort = selectedFitting.transform.GetChild(0);
+                var fittingModel = new OAFitting();
+                FittingState.Instance.SetFittingState(fittingModel.UpwardFittingLevels,selectedFitting);
             }
             else if (selectedFitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Extender)
             {
-                var fittingModel = new ExtenderFitting(selectedFitting.transform.position, selectedFitting.transform.rotation);
-                FittingState.Instance.SetFittingState(fittingModel.UpwardFittingLevels);
+                Transform fittingUpwardsCompatibilityPort = selectedFitting.transform.GetChild(0);
+                var fittingModel = new ExtenderFitting();
+                FittingState.Instance.SetFittingState(fittingModel.UpwardFittingLevels,selectedFitting);
             }
             else if (selectedFitting.GetComponent<FittingType>().TypeOfFitting == FittingTypes.Camera)
             {
                 var fittingModel = new CameraFitting();
-                FittingState.Instance.SetFittingState(null);
+                FittingState.Instance.SetFittingState( null,selectedFitting);
             }
         }
     }

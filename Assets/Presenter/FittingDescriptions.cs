@@ -9,9 +9,9 @@ namespace Assets.Presenter
 {
     /**
      *  This file provides fitting descriptions that would 
-     *  probably be fetched from some sort of a database.
+     *  probably be fetched from a database (this would be classes).
      *  This makes this a Model file, but for the sake of
-     *  example Presenter namespace would make these definitions
+     *  example, Presenter namespace would make these definitions
      *  available to both the views and the models.
      */
 
